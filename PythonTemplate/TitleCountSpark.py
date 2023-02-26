@@ -36,11 +36,11 @@ words = lines.flatMap(lambda x: re.split(delimitersReg, x.strip().lower()))
 words = words.map(lambda x: x.strip())
 words = words.filter(lambda x: x != '' and x not in stopWords)
 wordCounts = words.map(lambda x: (x, 1)).reduceByKey(lambda x,y: x+y)
-topWordCounts = wordCounts.top(10, key=lambda x: (x[1], x[0]))
+topWordCounts = wordCounts.top(10, key=lambda x: x[1])
 
 
 outputFile = open(sys.argv[4],"w")
-for wc in topWordCounts.reverse():
+for wc in reversed(topWordCounts):
     outputFile.write('%s\t%s\n' % (wc[0], wc[1]))
 outputFile.close()
 
