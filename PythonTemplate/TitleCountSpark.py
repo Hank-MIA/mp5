@@ -37,10 +37,10 @@ words = words.map(lambda x: x.strip())
 words = words.filter(lambda x: x != '' and x not in stopWords)
 wordCounts = words.map(lambda x: (x, 1)).reduceByKey(lambda x,y: x+y)
 topWordCounts = wordCounts.top(10, key=lambda x: x[1])
-
+topWordCounts.sort()
 
 outputFile = open(sys.argv[4],"w")
-for wc in reversed(topWordCounts):
+for wc in topWordCounts:
     outputFile.write('%s\t%s\n' % (wc[0], wc[1]))
 outputFile.close()
 
