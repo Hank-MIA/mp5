@@ -17,7 +17,7 @@ def splitAndMap(l):
     parent = parent.strip()
     for child in children:
         c = child.strip()
-        if c != '' and c != parent:
+        if c != '':
             listOfTuples.append((c, 'n'))
     listOfTuples.append((parent, 'p'))
     return listOfTuples
