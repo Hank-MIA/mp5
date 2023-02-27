@@ -13,6 +13,7 @@ lines = lines.map(lambda l: l.strip()).filter(lambda l: l!= '')
 def splitAndMap(l):
     listOfTuples = []
     parent, children = l.split(':')
+    children = children.split(' ')
     parent = parent.strip()
     for child in children:
         c = child.strip()
