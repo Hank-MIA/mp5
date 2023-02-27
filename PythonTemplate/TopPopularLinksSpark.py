@@ -25,7 +25,7 @@ orderedLinkCount = linkCount.top(10, key=lambda x: (x[1], x[0]))
 res = orderedLinkCount.reverse()
 
 output = open(sys.argv[2], "w")
-for k, v in res:
+for (k, v) in res:
     output.write('%s\t%s\n' % k, v)
 output.close()
 
