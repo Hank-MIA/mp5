@@ -12,10 +12,11 @@ lines = sc.textFile(sys.argv[1], 1)
 
 leagueIds = sc.textFile(sys.argv[2], 1)
 leagueIds = leagueIds.map(lambda x: x.strip()).filter(lambda x: x != x.strip())
-league = sc.broadcast(set(leagueIds.collect()))
+league = set(leagueIds.collect())
+#league = sc.broadcast(set(leagueIds.collect()))
 
 output = open(sys.argv[3], "w")
-for lea in league.value:
+for lea in league:
     output.write(lea + '\t')
 
 def splitAndMap(l):
@@ -23,7 +24,7 @@ def splitAndMap(l):
     links = (l.split(':')[1]).split(' ')
     for link in links:
         li = link.strip()
-        if li != '' and li in league.value:
+        if li != '' and li in league:
             kvs.append((li, 1))
     return kvs
 
