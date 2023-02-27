@@ -11,20 +11,16 @@ sc = SparkContext(conf=conf)
 lines = sc.textFile(sys.argv[1], 1) 
 
 leagueIds = sc.textFile(sys.argv[2], 1)
-leagueIds = leagueIds.map(lambda x: x.strip()).filter(lambda x: x != x.strip())
-league = set(leagueIds.collect())
-#league = sc.broadcast(set(leagueIds.collect()))
+leagueIds = leagueIds.map(lambda x: x.strip()).filter(lambda x: x != '')
+league = sc.broadcast(set(leagueIds.collect()))
 
-output = open(sys.argv[3], "w")
-for lea in league:
-    output.write(lea + '\t')
 
 def splitAndMap(l):
     kvs = []
     links = (l.split(':')[1]).split(' ')
     for link in links:
         li = link.strip()
-        if li != '' and li in league:
+        if li != '' and li in league.value:
             kvs.append((li, 1))
     return kvs
 
