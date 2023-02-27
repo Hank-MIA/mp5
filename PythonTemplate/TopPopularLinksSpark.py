@@ -24,7 +24,7 @@ linkCount = linkCountPairs.reduceByKey(lambda x, y: x+y)
 orderedLinkCount = linkCount.top(10, key=lambda x: (x[1], x[0]))
 
 output = open(sys.argv[2], "w")
-for kv in orderedLinkCount:
+for kv in orderedLinkCount.sort():
     output.write('%s\t%s\n' % (kv[0], kv[1]))
 output.close()
 
