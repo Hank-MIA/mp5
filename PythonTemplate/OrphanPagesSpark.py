@@ -24,8 +24,7 @@ def splitAndMap(l):
 orpRec = lines.map(lambda l: splitAndMap(l))
 orpRecCompressed = orpRec.reduceByKey(lambda x,y: 'n' if x == 'n' or y == 'n' else 'p')
 orphans = orpRecCompressed.filter(lambda x: x[1] == 'p').map(lambda x: x[0])
-count = orphans.count()
-sortedOrphans = orphans.takeOrdered(count).collect()
+sortedOrphans = orphans.sortBy(lambda x: x).collect()
 
 output = open(sys.argv[2], "w")
 for o in sortedOrphans:
