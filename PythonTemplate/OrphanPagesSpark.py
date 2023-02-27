@@ -7,13 +7,30 @@ conf.set("spark.driver.bindAddress", "127.0.0.1")
 sc = SparkContext(conf=conf)
 
 lines = sc.textFile(sys.argv[1], 1) 
+lines = lines.map(lambda l: l.strip()).filter(lambda l: l!= '')
 
-#TODO
+def splitAndMap(l):
+    listOfTuples = []
+    parent, children = l.split()
+    parent = parent.strip()
+    for child in children:
+        c = child.strip()
+        if c != '' and c != parent:
+            listOfTuples.append((c, 'n'))
+    listOfTuples.append('p')
+    return listOfTuples
+
+
+orpRec = lines.map(lambda l: splitAndMap(l))
+orpRecCompressed = orpRec.reduceByKey(lambda x,y: 'n' if x == 'n' or y == 'n' else 'p')
+orphans = orpRecCompressed.filter(lambda x: x[1] == 'p').map(lambda x: x[0])
+count = orphans.count()
+sortedOrphans = orphans.takeOrdered(count).collect()
 
 output = open(sys.argv[2], "w")
-
-#TODO
-#write results to output file. Foramt for each line: (line + "\n")
+for o in sortedOrphans:
+    output.write('%s\n' % o)
+output.close()
 
 sc.stop()
 

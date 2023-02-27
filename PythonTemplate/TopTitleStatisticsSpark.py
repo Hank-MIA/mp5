@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 from pyspark import SparkConf, SparkContext
+import math
 
 conf = SparkConf().setMaster("local").setAppName("TopTitleStatistics")
 conf.set("spark.driver.bindAddress", "127.0.0.1")
@@ -16,11 +17,11 @@ ans3 = counts.min()
 ans4 = counts.max()
 ans5 = counts.variance()
 outputFile = open(sys.argv[2], "w")
-outputFile.write('Mean\t%s\n' % ans1)
+outputFile.write('Mean\t%s\n' % math.floor(ans1))
 outputFile.write('Sum\t%s\n' % ans2)
 outputFile.write('Min\t%s\n' % ans3)
 outputFile.write('Max\t%s\n' % ans4)
-outputFile.write('Var\t%s\n' % ans5)
+outputFile.write('Var\t%s\n' % math.floor(ans5))
 outputFile.close()
 
 sc.stop()
