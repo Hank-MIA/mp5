@@ -25,8 +25,8 @@ orderedLinkCount = linkCount.top(10, key=lambda x: (x[1], x[0]))
 res = orderedLinkCount.reverse()
 
 output = open(sys.argv[2], "w")
-for (k, v) in res:
-    output.write('%s\t%s\n' % k, v)
+for kv in res:
+    output.write('%s\t%s\n' % kv[0], kv[1])
 output.close()
 
 #write results to output file. Foramt for each line: (key + \t + value +"\n")
