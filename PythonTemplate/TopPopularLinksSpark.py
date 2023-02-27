@@ -22,7 +22,7 @@ def splitAndMap(l):
 linkCountPairs = lines.flatMap(lambda l: splitAndMap(l))
 linkCount = linkCountPairs.reduceByKey(lambda x, y: x+y)
 orderedLinkCount = linkCount.top(10, key=lambda x: (x[1], x[0]))
-res = orderedLinkCount.collect().reverse()
+res = orderedLinkCount.reverse()
 
 output = open(sys.argv[2], "w")
 for k, v in res:
