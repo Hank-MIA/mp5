@@ -19,7 +19,7 @@ def splitAndMap(l):
     kvs = []
     links = (l.split(':')[1]).split(' ')
     for link in links:
-        if link != '' and link in league:
+        if link != '' and link in league.value:
             kvs.append((link, 1))
     return kvs
 
