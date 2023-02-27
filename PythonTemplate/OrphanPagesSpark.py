@@ -9,9 +9,10 @@ sc = SparkContext(conf=conf)
 lines = sc.textFile(sys.argv[1], 1) 
 lines = lines.map(lambda l: l.strip()).filter(lambda l: l!= '')
 
+
 def splitAndMap(l):
     listOfTuples = []
-    parent, children = l.split()
+    parent, children = l.split(':')
     parent = parent.strip()
     for child in children:
         c = child.strip()
