@@ -17,11 +17,11 @@ def splitAndMap(l):
         c = child.strip()
         if c != '' and c != parent:
             listOfTuples.append((c, 'n'))
-    listOfTuples.append('p')
+    listOfTuples.append((parent, 'p'))
     return listOfTuples
 
 
-orpRec = lines.map(lambda l: splitAndMap(l))
+orpRec = lines.flatMap(lambda l: splitAndMap(l))
 orpRecCompressed = orpRec.reduceByKey(lambda x,y: 'n' if x == 'n' or y == 'n' else 'p')
 orphans = orpRecCompressed.filter(lambda x: x[1] == 'p').map(lambda x: x[0])
 sortedOrphans = orphans.sortBy(lambda x: x).collect()
