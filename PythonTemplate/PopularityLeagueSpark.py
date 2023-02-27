@@ -14,13 +14,17 @@ leagueIds = sc.textFile(sys.argv[2], 1)
 leagueIds = leagueIds.map(lambda x: x.strip()).filter(lambda x: x != x.strip())
 league = sc.broadcast(set(leagueIds.collect()))
 
+output = open(sys.argv[3], "w")
+for lea in league.value:
+    output.write(lea + '\t')
 
 def splitAndMap(l):
     kvs = []
     links = (l.split(':')[1]).split(' ')
     for link in links:
-        if link != '' and link in league.value:
-            kvs.append((link, 1))
+        li = link.strip()
+        if li != '' and li in league.value:
+            kvs.append((li, 1))
     return kvs
 
 
@@ -31,7 +35,7 @@ linkCountsList.sort()
 
 output = open(sys.argv[3], "w")
 for lc in linkCountsList:
-    output.write('%s\t%s' % (lc[0], lc[1]))
+    output.write('%s\t%s\n' % (lc[0], lc[1]))
 output.close()
 
 
